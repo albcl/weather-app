@@ -24,7 +24,10 @@
     /* Aliases */
     "paths": {
       "src/*": ["./src/*"],
-      "@hooks/*": ["./src/hooks/*"]
+      "@components/*": ["./src/components/*"],
+      "@services/*": ["./src/services/*"],
+      "@hooks/*": ["./src/hooks/*"],
+      "@errors/*": ["./src/errors/*"]
     }
   },
   "include": ["src", ".eslintrc.cjs", "vite.config.ts"],

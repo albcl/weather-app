@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { VALIDATION_ERRORS } from "src/errors";
+import { ERROR_MESSAGES } from "@errors/errors";
 
 export function useSearch() {
   const [search, setSearch] = useState<string>("");
@@ -7,17 +7,17 @@ export function useSearch() {
 
   useEffect(() => {
     if (search === " ") {
-      setError(VALIDATION_ERRORS.NO_EMPTY_SEARCH);
+      setError(ERROR_MESSAGES.NO_EMPTY_SEARCH);
       return;
     }
 
     if (search.match(/[0-9]/) !== null) {
-      setError(VALIDATION_ERRORS.NO_NUMBERS_ALLOWED);
+      setError(ERROR_MESSAGES.NO_NUMBERS_ALLOWED);
       return;
     }
 
     setError(undefined);
   }, [search]);
 
-  return { search, setSearch, error };
+  return { search, setSearch, error, setError };
 }
