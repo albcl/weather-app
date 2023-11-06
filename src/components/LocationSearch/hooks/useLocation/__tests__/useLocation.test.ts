@@ -43,10 +43,7 @@ describe("useLocation - hooks", () => {
 
       const res = await result.current.getCoords("London").then((res) => res);
 
-      expect(res).toEqual({
-        lat: coords.lat.toString(),
-        lon: coords.lon.toString(),
-      });
+      expect(res).toEqual(coords);
     });
 
     it("should return 'Place not found' Error", async () => {

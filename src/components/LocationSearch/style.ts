@@ -14,10 +14,15 @@ export const Form = styled.form`
 export const Input = styled.input`
   background: transparent;
   border: none;
-  border-bottom: 1px solid black;
+  border-bottom: 2px solid #bfd6df;
   color: inherit;
   padding: 0 0.75rem;
   width: 72%;
+  transition: border-bottom 0.15s linear;
+
+  &:focus {
+    border-bottom-color: black;
+  }
 `;
 
 export const LoadingIcon = styled.span`
