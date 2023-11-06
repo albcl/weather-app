@@ -1,13 +1,14 @@
 import { WeatherDisplay } from "../WeatherDisplay";
-
-import * as S from "./style";
-import type { CoordsType } from "src/type";
-
-import { useWeather } from "src/hooks";
-import { getForecast } from "./services";
 import { Card } from "../Card";
 
-export function Forecast({ location }: { location: CoordsType | undefined }) {
+import { useWeather } from "src/hooks";
+
+import { getForecast } from "./services";
+
+import type { ForecastWeatherProps } from "./type";
+import * as S from "./style";
+
+export function Forecast({ location }: ForecastWeatherProps) {
   const { weather, error } = useWeather(location, getForecast);
   return (
     <Card.Forecast>
