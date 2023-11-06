@@ -4,7 +4,7 @@ Coding task
 
 ## Deployed in Netlify
 
-https://main--quiet-biscotti-61e3a9.netlify.app/
+https://quiet-biscotti-61e3a9.netlify.app/
 
 # Running it locally
 
