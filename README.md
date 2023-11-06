@@ -2,6 +2,10 @@
 
 Coding task
 
+## Deployed in Netlify
+
+https://main--quiet-biscotti-61e3a9.netlify.app/
+
 # React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
