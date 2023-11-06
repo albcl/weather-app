@@ -38,9 +38,7 @@ export async function getWeatherData(url: string): Promise<WeatherType[]> {
       if (data.list) return data.list.slice(0, 3);
       return [data];
     })
-    .then((hours) => {
-      console.log(hours);
-
-      return hours.map((hour: APIResults) => mapFromApiToWeather(hour));
-    });
+    .then((dataList) =>
+      dataList.map((singleHour: APIResults) => mapFromApiToWeather(singleHour))
+    );
 }

@@ -60,6 +60,7 @@ export const LocationSearch = ({ setLocation }: LocationSearchProps) => {
           aria-describedby={"error"}
           name="query"
           type="text"
+          role="search"
           placeholder="London"
           required
           value={search}

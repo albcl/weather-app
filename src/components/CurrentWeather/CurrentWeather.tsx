@@ -6,6 +6,7 @@ import { useWeather } from "@hooks/index";
 import { getWeather } from "./services";
 
 import type { CurrentWeatherProps } from "./type";
+import { ERROR_MESSAGES } from "src/errors/errors";
 
 export function CurrentWeather({ location }: CurrentWeatherProps) {
   const { weather, error } = useWeather(location, getWeather);
@@ -13,10 +14,6 @@ export function CurrentWeather({ location }: CurrentWeatherProps) {
   return !error ? (
     weather && <WeatherDisplay data={weather[0]} isLoading={!location} />
   ) : (
-    <WeatherError
-      errorMessage={
-        "There has been an error with your request. Please, try again later and let us know if it persists"
-      }
-    />
+    <WeatherError errorMessage={ERROR_MESSAGES.REQUEST_ERROR} />
   );
 }
