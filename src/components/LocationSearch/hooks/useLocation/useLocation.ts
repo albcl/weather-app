@@ -1,10 +1,7 @@
 import { useState } from "react";
 
 import { ERROR_MESSAGES } from "@errors/errors";
-import {
-  NoEmptySearch,
-  NoNavigatorAvailable,
-} from "@errors/createErrorFactory";
+import { NoEmptySearch } from "@errors/createErrorFactory";
 
 import {
   getCurrentCoordinates,
@@ -12,7 +9,7 @@ import {
   getLocationByCoords,
 } from "../../services";
 
-import type { CoordsType } from "src/type";
+import type { CoordsType, LocationType } from "src/type";
 
 export function useLocation() {
   const [loadingGeolocation, setLoadingGeolocation] = useState(false);
@@ -24,11 +21,11 @@ export function useLocation() {
 
     return await getDirectLocation(search).then((location) => {
       const { lat, lon } = location;
-      return { lat: lat.toString(), lon: lon.toString() };
+      return { lat, lon };
     });
   };
 
-  const getGeolocation = async (): Promise<any> => {
+  const getGeolocation = async (): Promise<LocationType> => {
     setLoadingGeolocation(true);
     try {
       const { lat, lon } = await getCurrentCoordinates();
@@ -38,8 +35,6 @@ export function useLocation() {
       return locationData;
     } catch (error) {
       setLoadingGeolocation(false);
-
-      if (error instanceof NoNavigatorAvailable) return;
       throw error;
     }
   };

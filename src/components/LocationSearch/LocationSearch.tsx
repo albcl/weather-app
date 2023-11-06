@@ -1,10 +1,12 @@
-import type { ChangeEvent, FormEvent, MouseEvent } from "react";
+import type { ChangeEvent, FormEvent } from "react";
 
 import {
   useLocation,
   useGeolocation,
   useSearch,
 } from "@components/LocationSearch/hooks";
+
+import * as S from "./style";
 
 import type { CoordsType } from "src/type";
 
@@ -25,18 +27,32 @@ export const LocationSearch = ({ setLocation }: LocationSearchProps) => {
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!error) {
-      getCoords(search).then(setLocation).catch(setError);
+      getCoords(search)
+        .then(setLocation)
+        .catch((e) => {
+          setError(e.message);
+        });
     }
   };
 
   const handleGeoLocation = () => {
-    getGeolocation().then(setLocation).catch(setError);
+    setSearch("");
+
+    getGeolocation()
+      .then((location) => {
+        const { lat, lon, name } = location;
+        setSearch(name);
+        setLocation({ lat, lon });
+      })
+      .catch((e) => {
+        setError(e.message);
+      });
   };
 
   return (
-    <>
-      <form onSubmit={handleSubmit}>
-        <input
+    <S.Header>
+      <S.Form onSubmit={handleSubmit}>
+        <S.Input
           aria-invalid={!!error}
           aria-describedby={"error"}
           name="query"
@@ -46,22 +62,28 @@ export const LocationSearch = ({ setLocation }: LocationSearchProps) => {
           value={search}
           onChange={handleChange}
         />
-        <button type="submit">Search</button>
+        <button type="submit">
+          <span className="material-symbols-outlined">search</span>
+        </button>
         {displayGeolocation && (
           <button
             disabled={loadingGeolocation}
             type="button"
             onClick={handleGeoLocation}
           >
-            {!loadingGeolocation ? "Icon" : "Loading"}
+            {!loadingGeolocation ? (
+              <span className="material-symbols-outlined">
+                location_searching
+              </span>
+            ) : (
+              <S.LoadingIcon className="material-symbols-outlined">
+                sync
+              </S.LoadingIcon>
+            )}
           </button>
         )}
-      </form>
-      {error && (
-        <p id="error" style={{ color: "red" }}>
-          {error}
-        </p>
-      )}
-    </>
+      </S.Form>
+      {error && <S.ErrorMessage id="error">{error}</S.ErrorMessage>}
+    </S.Header>
   );
 };

@@ -10,6 +10,6 @@ export type LocationAPIResults = {
 export type LocationType = Omit<LocationAPIResults, "local_names">;
 
 export type CoordsType = {
-  lat: string;
-  lon: string;
+  lat: number;
+  lon: number;
 };
