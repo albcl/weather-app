@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const Panel = styled.article`
+export const Panel = styled.article<{ isLoading: boolean }>`
   display: grid;
   gap: 1rem;
   justify-content: center;
@@ -9,6 +9,11 @@ export const Panel = styled.article`
   grid-template-columns: 1fr;
   align-items: center;
   flex: 1;
+  min-width: 300px;
+  min-height: 600px;
+
+  opacity: ${(props) => (props.isLoading ? ".2" : "1")};
+  transition: opacity 0.15s linear;
 `;
 
 export const Section = styled.section`
@@ -19,6 +24,7 @@ export const Section = styled.section`
 `;
 
 export const CurrentTemperature = styled.h1`
+  position: relative;
   font-size: 7rem;
   font-weight: 100;
   color: #f7a300;

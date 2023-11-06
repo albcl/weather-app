@@ -48,12 +48,9 @@ button {
 button:hover {
   background-color: #e1e1e1;
 }
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
-}
 
 #root {
   display: flex;
   justify-content: center;
+  max-width: 1440px;
 }

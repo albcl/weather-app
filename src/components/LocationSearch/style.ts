@@ -12,6 +12,7 @@ export const Form = styled.form`
 `;
 
 export const Input = styled.input`
+  font-size: 1.2rem;
   background: transparent;
   border: none;
   border-bottom: 2px solid #bfd6df;
@@ -38,9 +39,10 @@ export const LoadingIcon = styled.span`
 export const ErrorMessage = styled.div`
   position: absolute;
   width: 100%;
-  bottom: -4rem;
+  bottom: -5rem;
   opacity: 1;
-  background: #f55100;
+  background-color: #f55100;
+  box-shadow: 0 3px 2px 0px #0003;
   color: white;
   padding: 1rem;
   border-radius: 5px;
@@ -49,11 +51,13 @@ export const ErrorMessage = styled.div`
   @keyframes slideIn {
     0% {
       opacity: 0;
-      bottom: -3rem;
+      bottom: -4rem;
+      box-shadow: 0 0 0 0 #0003;
     }
     100% {
       opacity: 1;
-      bottom: -4rem;
+      bottom: -5rem;
+      box-shadow: 0 3px 2px 0px #0003;
     }
   }
 `;

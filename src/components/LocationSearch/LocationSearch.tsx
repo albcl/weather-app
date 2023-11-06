@@ -27,6 +27,8 @@ export const LocationSearch = ({ setLocation }: LocationSearchProps) => {
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!error) {
+      setLocation(undefined);
+
       getCoords(search)
         .then(setLocation)
         .catch((e) => {
@@ -37,6 +39,7 @@ export const LocationSearch = ({ setLocation }: LocationSearchProps) => {
 
   const handleGeoLocation = () => {
     setSearch("");
+    setLocation(undefined);
 
     getGeolocation()
       .then((location) => {

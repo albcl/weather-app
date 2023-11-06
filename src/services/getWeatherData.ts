@@ -1,12 +1,11 @@
-import { getWeatherURL } from "@services/config";
 import { handleError } from "@errors/errorHandling";
 
-import type { CoordsType } from "src/type";
-import type { WeatherType } from "../type";
-import type { WeatherAPIResultsProps } from "./type";
+import type { APIResults } from "./type";
+import type { WeatherType } from "src/services/type";
 
-function mapFromApiToWeather(data: WeatherAPIResultsProps): WeatherType {
+function mapFromApiToWeather(data: APIResults): WeatherType {
   return {
+    id: data.dt,
     clouds: data.clouds.all,
     temp: {
       current: Math.round(data.main.temp),
@@ -26,9 +25,7 @@ function mapFromApiToWeather(data: WeatherAPIResultsProps): WeatherType {
   };
 }
 
-export async function getWeatherData(location: CoordsType): Promise<any> {
-  const url = getWeatherURL(location);
-
+export async function getWeatherData(url: string): Promise<WeatherType[]> {
   return await fetch(url)
     .then((response) => {
       if (!response.ok) {
@@ -37,5 +34,13 @@ export async function getWeatherData(location: CoordsType): Promise<any> {
       return response;
     })
     .then(async (response) => await response.json())
-    .then(mapFromApiToWeather);
+    .then((data) => {
+      if (data.list) return data.list.slice(0, 3);
+      return [data];
+    })
+    .then((hours) => {
+      console.log(hours);
+
+      return hours.map((hour: APIResults) => mapFromApiToWeather(hour));
+    });
 }
