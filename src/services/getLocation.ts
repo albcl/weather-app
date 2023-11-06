@@ -1,11 +1,9 @@
 import { PlaceNotFound } from "@errors/createErrorFactory";
-import { getGeocodingDirectURL } from "@services/config";
 import { handleError } from "@errors/errorHandling";
-import type { LocationAPIResults, LocationType } from "./type";
 
-export async function getDirectLocation(search: string): Promise<LocationType> {
-  const url = getGeocodingDirectURL(search);
+import type { LocationAPIResults } from "src/type";
 
+export async function getLocation(url: string) {
   return await fetch(url)
     .then(async (response) => {
       if (!response.ok) {

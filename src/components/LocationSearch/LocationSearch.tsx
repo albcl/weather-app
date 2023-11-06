@@ -1,6 +1,10 @@
-import type { ChangeEvent, FormEvent } from "react";
+import type { ChangeEvent, FormEvent, MouseEvent } from "react";
 
-import { useLocation, useSearch } from "@components/LocationSearch/hooks";
+import {
+  useLocation,
+  useGeolocation,
+  useSearch,
+} from "@components/LocationSearch/hooks";
 
 import type { CoordsType } from "src/type";
 
@@ -10,7 +14,13 @@ type LocationSearchProps = {
 
 export const LocationSearch = ({ setLocation }: LocationSearchProps) => {
   const { search, setSearch, error, setError } = useSearch();
-  const { getCoords } = useLocation();
+  const { getCoords, getGeolocation, loadingGeolocation } = useLocation();
+  const { displayGeolocation } = useGeolocation();
+
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const search = event.target.value;
+    setSearch(search);
+  };
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -19,9 +29,8 @@ export const LocationSearch = ({ setLocation }: LocationSearchProps) => {
     }
   };
 
-  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const search = event.target.value;
-    setSearch(search);
+  const handleGeoLocation = () => {
+    getGeolocation().then(setLocation).catch(setError);
   };
 
   return (
@@ -38,6 +47,15 @@ export const LocationSearch = ({ setLocation }: LocationSearchProps) => {
           onChange={handleChange}
         />
         <button type="submit">Search</button>
+        {displayGeolocation && (
+          <button
+            disabled={loadingGeolocation}
+            type="button"
+            onClick={handleGeoLocation}
+          >
+            {!loadingGeolocation ? "Icon" : "Loading"}
+          </button>
+        )}
       </form>
       {error && (
         <p id="error" style={{ color: "red" }}>

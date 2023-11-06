@@ -1,13 +1,13 @@
 import { describe, expect, it, vi } from "vitest";
-import { getDirectLocation } from "..";
 import {
   PlaceNotFound,
   ServiceDown,
   URLNotFound,
   Unauthorized,
 } from "@errors/createErrorFactory";
+import { getLocation } from "../getLocation";
 
-describe("getDirectLocation - services", () => {
+describe("getLocation - services", () => {
   const cases = [
     { status: 401, expected: Unauthorized },
     { status: 404, expected: URLNotFound },
@@ -15,20 +15,19 @@ describe("getDirectLocation - services", () => {
     { status: 0, expected: Error },
   ];
   it.each(cases)(
-    "should throw handled $status status error - $expected",
+    "should throw handled $status status error",
     async ({ status, expected }) => {
-      const spy = vi
-        .spyOn(window, "fetch")
+      vi.spyOn(window, "fetch")
         // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
         .mockResolvedValue({ ok: false, status } as Response);
 
-      await expect(getDirectLocation("")).rejects.toBeInstanceOf(expected);
+      await expect(getLocation("http://")).rejects.toBeInstanceOf(expected);
     }
   );
 
   it("should throw error if location doesn't exist", async () => {
-    const spy = vi
-      .spyOn(window, "fetch")
+    // Mock successful response with no data
+    vi.spyOn(window, "fetch")
       // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
       .mockResolvedValue({
         ok: true,
@@ -36,12 +35,7 @@ describe("getDirectLocation - services", () => {
         json: () => ({}),
       } as Response);
 
-    await expect(getDirectLocation("")).rejects.toBeInstanceOf(PlaceNotFound);
-
-    const VITE_GEOCODING_DIRECT_URL = import.meta.env.VITE_GEOCODING_DIRECT_URL;
-    expect(spy).toBeCalledWith(
-      expect.stringMatching(VITE_GEOCODING_DIRECT_URL)
-    );
+    await expect(getLocation("http://")).rejects.toBeInstanceOf(PlaceNotFound);
   });
 
   it("should return whole location", async () => {
@@ -61,13 +55,8 @@ describe("getDirectLocation - services", () => {
         json: async () => [response],
       } as Response);
 
-    await expect(getDirectLocation(response.name)).resolves.toEqual(response);
+    await expect(getLocation("http://")).resolves.toEqual(response);
 
-    const VITE_GEOCODING_DIRECT_URL = import.meta.env.VITE_GEOCODING_DIRECT_URL;
-    expect(spy).toBeCalledWith(
-      expect.stringMatching(VITE_GEOCODING_DIRECT_URL)
-    );
-
-    expect(spy).toBeCalledWith(expect.stringMatching(response.name));
+    expect(spy).toBeCalled();
   });
 });

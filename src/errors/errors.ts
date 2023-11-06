@@ -6,3 +6,10 @@ export const enum ERROR_MESSAGES {
   SERVICE_DOWN = "Uh-oh! The service doesn't seem to be currently available. Try a bit later!",
   REQUEST_ERROR = "There has been an error with your request. Please, try again later and let us know if it persists",
 }
+
+export const enum GEOLOCATION_ERRORS {
+  PERMISSION_DENIED = "You've decided not to share your position, but it's OK. We won't ask you again.",
+  POSITION_UNAVAILABLE = "The network is down or the positioning service can't be reached.",
+  TIMEOUT = "The attempt timed out before it could get the location data.",
+  GENERIC = "Geolocation failed due to unknown error.",
+}

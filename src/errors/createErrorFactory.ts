@@ -12,3 +12,5 @@ export const URLNotFound = createErrorFactory("URLNotFound");
 export const Unauthorized = createErrorFactory("Unauthorized");
 export const ServiceDown = createErrorFactory("ServiceDown");
 export const NoEmptySearch = createErrorFactory("NoEmptySearch");
+export const NoNavigatorAvailable = createErrorFactory("NoNavigatorAvailable");
+export const GeolocationError = createErrorFactory("GeolocationError");
