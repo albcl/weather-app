@@ -32,4 +32,4 @@ pnpm run test
 
 ## Note
 
-In case the project gets cloned to run it locally, and to make it simpler, I have added a .env file with the current API token for the time being.
+In case the project gets cloned to run it locally, and to make it simpler, I have added an `.env` file with the current API token for the time being. In a production scenario, the configuration would be stored in the environment and set by e.g. a CD pipeline.
