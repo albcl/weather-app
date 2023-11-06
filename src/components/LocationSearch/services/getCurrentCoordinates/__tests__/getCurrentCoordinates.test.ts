@@ -34,6 +34,7 @@ describe("getCurrentCoordinates - services", () => {
     // Mock the geolocation object
     const mockedGeolocation = {
       getCurrentPosition: vi.fn((success, error) => {
+        success({});
         error({
           error: {
             code: 1,

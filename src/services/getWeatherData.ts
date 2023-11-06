@@ -1,9 +1,8 @@
 import { handleError } from "@errors/errorHandling";
 
-import type { APIResults } from "./type";
-import type { WeatherType } from "src/services/type";
+import type { WeatherAPIResultsProps, WeatherType } from "src/services/type";
 
-function mapFromApiToWeather(data: APIResults): WeatherType {
+function mapFromApiToWeather(data: WeatherAPIResultsProps): WeatherType {
   return {
     id: data.dt,
     clouds: data.clouds.all,
@@ -39,6 +38,8 @@ export async function getWeatherData(url: string): Promise<WeatherType[]> {
       return [data];
     })
     .then((dataList) =>
-      dataList.map((singleHour: APIResults) => mapFromApiToWeather(singleHour))
+      dataList.map((singleHour: WeatherAPIResultsProps) =>
+        mapFromApiToWeather(singleHour)
+      )
     );
 }
